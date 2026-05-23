@@ -16,8 +16,19 @@ def monte_carlo_integration(func, a, b, max_y, num_samples):
 
 
 if __name__ == "__main__":
-    result_scipy = spi.quad(f, 0, 5)[0]
+    random.seed(42)
+
+    a = 0
+    b = 4.5
+    max_y = 7
+    num_samples = 100000
+
+    result_scipy, error = spi.quad(f, a, b)
+    result_analytical = -(b**3 - a**3) / 3 + 2 * (b**2 - a**2) + 3 * (b - a)
+    result_monte_carlo = monte_carlo_integration(f, a, b, max_y, num_samples)
+
+    print("Analytical result:", result_analytical)
     print("Scipy result:", result_scipy)
-    result_monte_carlo = monte_carlo_integration(f, 0, 5, 7, 100000)
+    print("Scipy absolute error estimate:", error)
     print("Monte Carlo result:", result_monte_carlo)
     print("Difference:", abs(result_scipy - result_monte_carlo))
